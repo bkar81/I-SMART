@@ -1,7 +1,7 @@
-// IMART service worker v1.0.0
-// Caches the IMART app shell for offline use and supports the in-app update check.
+// I-SMART service worker v1.0.0
+// Caches the I-SMART app shell for offline use and supports the in-app update check.
 
-const CACHE_PREFIX = "imart-cache-";
+const CACHE_PREFIX = "i-smart-cache-";
 const CACHE_NAME = CACHE_PREFIX + "v1.0.0";
 
 const ASSETS = [
@@ -62,7 +62,7 @@ self.addEventListener("fetch", (event) => {
       const isAppShell =
         url.pathname.endsWith("/index.html") ||
         url.pathname.endsWith("/") ||
-        url.pathname.endsWith("/imart");
+        url.pathname.endsWith("/ismart");
 
       const networkFetch = fetch(event.request)
         .then((response) => {
