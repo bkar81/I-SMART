@@ -1,9 +1,9 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IMART Documentation</title><meta name="theme-color" content="#0f1318"><style>:root{--bg:#f4f7fb;--card:#fff;--border:#d7e0ec;--text:#172033;--dim:#53627a;--faint:#7b8aa2;--accent:#2563eb;--code:#eef3fa}html[data-t=dark]{--bg:#0f1318;--card:#151a21;--border:#2a303a;--text:#f3f5f8;--dim:#8b94a5;--faint:#5d6675;--accent:#e5b04a;--code:#20252d}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;padding:24px 16px 48px}.wrap{max-width:720px;margin:auto}a{color:var(--accent)}h1{font-size:24px;margin:0 0 4px}h2{font-size:16px;color:var(--accent);margin:24px 0 10px}p,li{color:var(--dim);font-size:13.5px}li{margin-bottom:7px}strong{color:var(--text)}code{background:var(--code);padding:2px 6px;border-radius:5px;font-size:12px}.back{display:inline-block;margin-bottom:24px;color:var(--faint);text-decoration:none}.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:16px;box-shadow:0 2px 8px rgba(30,55,90,.06)}.updated{color:var(--faint);font-size:13px;margin-bottom:24px}</style><script>try{if(localStorage.getItem("imart-theme")!=="light")document.documentElement.dataset.t="dark"}catch(e){document.documentElement.dataset.t="dark"}</script></head><body><div class="wrap"><a class="back" href="./index.html">‹ Back to IMART</a><div class="card"><h1>IMART — Image Markup, Annotation &amp; Redaction Tool</h1>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>I-SMART Documentation</title><meta name="theme-color" content="#0f1318"><style>:root{--bg:#f4f7fb;--card:#fff;--border:#d7e0ec;--text:#172033;--dim:#53627a;--faint:#7b8aa2;--accent:#2563eb;--code:#eef3fa}html[data-t=dark]{--bg:#0f1318;--card:#151a21;--border:#2a303a;--text:#f3f5f8;--dim:#8b94a5;--faint:#5d6675;--accent:#e5b04a;--code:#20252d}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;padding:24px 16px 48px}.wrap{max-width:720px;margin:auto}a{color:var(--accent)}h1{font-size:24px;margin:0 0 4px}h2{font-size:16px;color:var(--accent);margin:24px 0 10px}p,li{color:var(--dim);font-size:13.5px}li{margin-bottom:7px}strong{color:var(--text)}code{background:var(--code);padding:2px 6px;border-radius:5px;font-size:12px}.back{display:inline-block;margin-bottom:24px;color:var(--faint);text-decoration:none}.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:16px;box-shadow:0 2px 8px rgba(30,55,90,.06)}.updated{color:var(--faint);font-size:13px;margin-bottom:24px}</style><script>try{if(localStorage.getItem("I-SMART-theme")!=="light")document.documentElement.dataset.t="dark"}catch(e){document.documentElement.dataset.t="dark"}</script></head><body><div class="wrap"><a class="back" href="./index.html">‹ Back to I-SMART</a><div class="card"><h1>I-SMART — Image &amp; Screenshot Markup, Annotation &amp; Redaction Tool</h1>
 <p><strong>Open-source · Offline · Private</strong></p>
 <p><strong>Version 1.0.0</strong></p>
-<p>IMART is a standalone, mobile-first image annotation tool for opening or pasting an image, adding editable Layers, refining annotations and exporting the finished image. It is designed to run locally in the browser and can be hosted from a static site such as GitHub Pages.</p>
-<h2>What IMART does</h2>
-<p>IMART lets you bring an image into the editor and annotate it without requiring an IMART server.</p>
+<p>I-SMART is a standalone, mobile-first image annotation tool for opening or pasting an image, adding editable Layers, refining annotations and exporting the finished image. It is designed to run locally in the browser and can be hosted from a static site such as GitHub Pages.</p>
+<h2>What I-SMART does</h2>
+<p>I-SMART lets you bring an image into the editor and annotate it without requiring an I-SMART server.</p>
 <ul>
 <li>Open an image from the device.</li>
 <li>Paste an image from the clipboard where the browser allows it.</li>
@@ -23,7 +23,7 @@
 </ul>
 <h2>Select and Layers</h2>
 <p>Layers are editable objects rather than permanently painted pixels.</p>
-<p>When an annotation is created, IMART remembers which tool created that Layer. After a normal annotation is completed, IMART returns to <strong>Select</strong> and selects the newly created Layer. Selecting a Layer exposes the properties belonging to the tool that created it, allowing that particular Layer to be refined without changing the main tool&#x27;s settings.</p>
+<p>When an annotation is created, I-SMART remembers which tool created that Layer. After a normal annotation is completed, I-SMART returns to <strong>Select</strong> and selects the newly created Layer. Selecting a Layer exposes the properties belonging to the tool that created it, allowing that particular Layer to be refined without changing the main tool&#x27;s settings.</p>
 <p>For example, an Arrow created in red can later be selected and changed to yellow without changing the Arrow tool&#x27;s current blue setting for the next Arrow you create.</p>
 <h2>Pen / Freehand: Keep strokes together</h2>
 <p>The <strong>Keep strokes together</strong> option controls how your drawing is organized into Layers.</p>
@@ -33,18 +33,18 @@
 <p>Every time you lift your finger, that stroke becomes its own Layer. This is useful when you want to move, resize, recolor, or delete individual strokes separately.</p>
 <p><strong>Example:</strong> If you write <strong>“I am good”</strong> with several strokes and Keep strokes together is ON, the whole writing can be moved together. If it is OFF, each stroke can be handled independently.</p>
 <h2>Colors</h2>
-<p>IMART provides quick colors plus a custom color chooser with synchronized <strong>HEX, RGB and HSL</strong> values. The selected color is kept separate for each tool and each editable Layer. The screen eyedropper is used where the browser supports the EyeDropper API.</p>
+<p>I-SMART provides quick colors plus a custom color chooser with synchronized <strong>HEX, RGB and HSL</strong> values. The selected color is kept separate for each tool and each editable Layer. The screen eyedropper is used where the browser supports the EyeDropper API.</p>
 <h2>Settings</h2>
 <p>Settings can be exported to and imported from JSON. The backup preserves the current settings for each tool, including dimensions, colors, opacity, styles, text formatting, freehand grouping and export preferences.</p>
 <p>The <strong>Tool Defaults</strong> tab shows the factory defaults and provides a confirmation-protected reset of all tool settings. Resetting tool settings does not change existing Layers.</p>
 <h2>Redaction</h2>
 <p>There is intentionally no separate REDACT tool. Use <strong>Rectangle</strong>, <strong>Blur</strong> or <strong>Pixelate</strong> when you need to hide or redact information.</p>
 <h2>Privacy and offline behavior</h2>
-<p>IMART is local-first. Normal image annotation does not require an IMART application server. Your image and annotation work remain in the browser session unless you explicitly export, download or share the result.</p>
+<p>I-SMART is local-first. Normal image annotation does not require an I-SMART application server. Your image and annotation work remain in the browser session unless you explicitly export, download or share the result.</p>
 <p>The PWA service worker provides the application shell for offline use. Features that depend on browser capabilities, such as the system clipboard or EyeDropper API, depend on the browser and its permissions.</p>
 <p>See the <a href="./privacy.html">Privacy Policy</a> and <a href="./terms.html">Terms of Service</a> for more information.</p>
-<h2>Installing IMART</h2>
-<p>Open the hosted IMART address in a supported browser such as Chrome and choose <strong>Install app</strong> or <strong>Add to Home screen</strong> when offered.</p>
+<h2>Installing I-SMART</h2>
+<p>Open the hosted I-SMART address in a supported browser such as Chrome and choose <strong>Install app</strong> or <strong>Add to Home screen</strong> when offered.</p>
 <h2>Files to host</h2>
 <p>Put these files together in the same folder on your static host:</p>
 <ul>
@@ -62,9 +62,9 @@
 </ul>
 <h2>What is intentionally not included</h2>
 <ul>
-<li>Screenshot capture is not part of IMART. Images are brought in by opening or pasting them.</li>
+<li>Screenshot capture is not part of I-SMART. Images are brought in by opening or pasting them.</li>
 <li>OCR is intentionally excluded from the roadmap.</li>
 </ul>
 <h2>Version</h2>
-<p><strong>IMART 1.0.0</strong></p>
-<p>Image Markup, Annotation &amp; Redaction Tool</p></div></div></body></html>
+<p><strong>I-SMART 1.0.0</strong></p>
+<p>Image & Screenshot Markup, Annotation &amp; Redaction Tool</p></div></div></body></html>
