@@ -1,6 +1,6 @@
 {
-  "name": "IMART — Image Markup, Annotation & Redaction Tool",
-  "short_name": "IMART",
+  "name": "I-SMART — Image & Screenshot Markup, Annotation & Redaction Tool",
+  "short_name": "I-SMART",
   "id": "./",
   "start_url": "./",
   "scope": "./",
@@ -11,7 +11,7 @@
   ],
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
-  "description": "IMART — Image Markup, Annotation & Redaction Tool",
+  "description": "I-SMART — Image & Screenshot Markup, Annotation & Redaction Tool",
   "icons": [
     {
       "src": "pwa-192x192.png",
