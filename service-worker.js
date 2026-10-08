@@ -62,7 +62,7 @@ self.addEventListener("fetch", (event) => {
       const isAppShell =
         url.pathname.endsWith("/index.html") ||
         url.pathname.endsWith("/") ||
-        url.pathname.endsWith("/ismart");
+        url.pathname.endsWith("/i-smart");
 
       const networkFetch = fetch(event.request)
         .then((response) => {
