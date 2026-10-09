@@ -178,7 +178,7 @@
     </div>
   </div>
 </div>
-<div class="sheet-backdrop confirm-sheet" id="confirmSheet"><div class="sheet"><div class="grab"></div><div class="sheet-title"><h3 id="confirmTitle">Confirm</h3><button class="icon-btn" id="confirmClose">✕</button></div><div class="confirm-message" id="confirmMessage"></div><div class="modal-actions"><button class="ui-btn" id="confirmCancel">Cancel</button><button class="ui-btn primary" id="confirmOk">Confirm</button></div></div></div><div class="sheet-backdrop confirm-sheet project-name-sheet" id="projectNameSheet"><div class="sheet"><div class="grab"></div><div class="sheet-title"><h3>Save Project</h3><button class="icon-btn" id="projectNameClose">✕</button></div><div class="confirm-message">Enter a project name. If left blank, I-SMART will assign the next available <b>untitled-#</b> name.</div><input class="project-name-input" id="projectNameInput" type="text" maxlength="120" autocomplete="off" placeholder="Project name"><div class="modal-actions"><button class="ui-btn" id="projectNameCancel">Cancel</button><button class="ui-btn primary" id="projectNameSave">Save Project</button></div></div></div><div class="toast" id="toast"></div>
+<div class="sheet-backdrop confirm-sheet" id="confirmSheet"><div class="sheet"><div class="grab"></div><div class="sheet-title"><h3 id="confirmTitle">Confirm</h3><button class="icon-btn" id="confirmClose">✕</button></div><div class="confirm-message" id="confirmMessage"></div><div class="modal-actions"><button class="ui-btn" id="confirmCancel">Cancel</button><button class="ui-btn primary" id="confirmOk">Confirm</button></div></div></div><div class="sheet-backdrop confirm-sheet" id="exportImageNameSheet"><div class="sheet"><div class="grab"></div><div class="sheet-title"><h3>Export Image</h3><button class="icon-btn" id="exportImageNameClose" aria-label="Close">✕</button></div><div class="confirm-message">Enter a filename for your exported image. The selected image format will be added automatically.</div><label for="exportImageNameInput" style="display:block;font-size:12px;font-weight:800;color:var(--muted);margin:12px 0 6px">Image filename</label><input class="project-name-input" id="exportImageNameInput" type="text" maxlength="160" autocomplete="off" placeholder="I-SMART-annotation"><div class="modal-actions"><button class="ui-btn" id="exportImageNameCancel">Cancel</button><button class="ui-btn primary" id="exportImageNameConfirm">Export Image</button></div></div></div><div class="sheet-backdrop confirm-sheet project-name-sheet" id="projectNameSheet"><div class="sheet"><div class="grab"></div><div class="sheet-title"><h3>Save Project</h3><button class="icon-btn" id="projectNameClose">✕</button></div><div class="confirm-message">Enter a project name. If left blank, I-SMART will assign the next available <b>untitled-#</b> name.</div><input class="project-name-input" id="projectNameInput" type="text" maxlength="120" autocomplete="off" placeholder="Project name"><div class="modal-actions"><button class="ui-btn" id="projectNameCancel">Cancel</button><button class="ui-btn primary" id="projectNameSave">Save Project</button></div></div></div><div class="toast" id="toast"></div>
 <script>
 
 const canvas=document.getElementById('editorCanvas'),ctx=canvas.getContext('2d');
@@ -735,14 +735,26 @@ function openConfirm(title,message,label='Confirm',kind='primary',fn=null){$('co
 function doExport(){
   const out=exportCanvas();
   if(!out)return toast('Open an image first.');
+  const input=$('exportImageNameInput');
+  input.value='I-SMART-annotation';
+  $('exportImageNameSheet').classList.add('open');
+  setTimeout(()=>{input.focus();input.select()},60);
+}
+function confirmImageExport(){
+  const out=exportCanvas();
+  if(!out)return toast('Open an image first.');
   const fmt=String(state.exportSettings.format||'png').toLowerCase();
   const mime=fmt==='jpeg'?'image/jpeg':fmt==='webp'?'image/webp':'image/png';
   const ext=fmt==='jpeg'?'jpg':fmt;
-  const quality=Math.max(0.1,Math.min(1,(state.exportSettings.quality||92)/100));
+  const quality=Math.max(0.1,Math.min(1,(state.exportSettings.quality||100)/100));
+  let base=String($('exportImageNameInput').value||'').trim();
+  base=base.replace(/[\\/:*?"<>|]/g,'_').replace(/\.(png|jpe?g|webp)$/i,'').trim();
+  if(!base){toast('Enter a filename for the exported image.');$('exportImageNameInput').focus();return}
+  $('exportImageNameSheet').classList.remove('open');
   out.toBlob(blob=>{
     if(!blob)return toast('Export failed.');
-    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='I-SMART-annotation.'+ext;a.click();
-    setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('Image exported');
+    const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=base+'.'+ext;a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Image exported as '+base+'.'+ext);
   },mime,mime==='image/png'?undefined:quality);
 }
 
@@ -786,6 +798,7 @@ $('clearBtn').onclick=()=>{if(!state.objects.length)return toast('There are no l
 async function doShare(){const c=exportCanvas();if(!c)return toast('Open an image first.');c.toBlob(async b=>{const f=new File([b],'I-SMART-annotation.png',{type:'image/png'});if(navigator.share&&navigator.canShare?.({files:[f]})){try{await navigator.share({title:'I-SMART annotation',files:[f]});return}catch(e){if(e?.name==='AbortError')return}}const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=f.name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)},'image/png')}
 $('shareBtn').onclick=()=>{if(!state.image)return toast('Open an image first.');openConfirm('Share image','Share the current image with all visible layers as an image?','Share','primary',doShare)};
 
+$('exportImageNameClose').onclick=$('exportImageNameCancel').onclick=()=>{$('exportImageNameSheet').classList.remove('open')};$('exportImageNameConfirm').onclick=confirmImageExport;$('exportImageNameInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();confirmImageExport()}if(e.key==='Escape')$('exportImageNameSheet').classList.remove('open')});
 $('layersBtn').onclick=()=>{$('layersSheet').classList.add('open');renderLayers()};$('freehandInfoClose').onclick=()=>$('freehandInfoSheet').classList.remove('open');$('freehandInfoOk').onclick=()=>$('freehandInfoSheet').classList.remove('open');document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).classList.remove('open'));$('confirmClose').onclick=()=>{$('confirmSheet').classList.remove('open');confirmAction=null};$('confirmCancel').onclick=()=>{$('confirmSheet').classList.remove('open');confirmAction=null};$('confirmOk').onclick=()=>{const fn=confirmAction;$('confirmSheet').classList.remove('open');confirmAction=null;if(fn)fn()};$('exportFormatSetting').onchange=e=>state.exportSettings.format=e.target.value;$('exportQualitySetting').oninput=e=>{state.exportSettings.quality=+e.target.value;$('exportQualityValue').textContent=e.target.value+'%'};$('projectLimitSetting').onchange=async e=>{const n=setProjectLimit(e.target.value);const count=(await projectAll()).length;if(count>n)toast(`Project limit is now ${n}. Existing projects were not deleted; delete projects before creating more.`);renderProjectSettings()};$('saveProjectBtn').onclick=()=>saveCurrentProject(false);$('exportAllProjectsBtn').onclick=exportAllProjects;$('importProjectsBtn').onclick=()=>$('projectsFile').click();$('projectsFile').onchange=e=>{const f=e.target.files?.[0];if(f)importProjectFile(f);e.target.value=''};$('exportSettingsBtn').onclick=()=>downloadJson(settingsPayload(),'I-SMART-settings.json');$('importSettingsBtn').onclick=()=>$('settingsFile').click();$('settingsFile').onchange=e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.toolSettings)state.toolSettings=Object.assign({},state.toolSettings,d.toolSettings);state.freehandGroup=d.freehandGroup!==false;state.recent=Array.isArray(d.recent)?d.recent:state.recent;if(d.theme)setTheme(d.theme);if(d.exportSettings)state.exportSettings=Object.assign(state.exportSettings,d.exportSettings);loadToolSettings(state.tool);renderControls();renderRecent();renderSettingsPage();toast('Settings imported')}catch(err){toast('Invalid I-SMART settings file')}};r.readAsText(f);e.target.value=''};function currentObjectById(oid){return state.objects.find(o=>o.id===oid)||null}
 initISMARTColorPicker();buildPalette();renderRecent();syncPicker();hist();renderControls();renderLayers();renderSettingsPage();renderProjectList();
 
@@ -871,4 +884,7 @@ if (ismartFavicon) ismartFavicon.href = ISMART_ICON_DATA;
 .cpk-act .ui-btn{flex:1}
 .color-picker-sheet{max-width:560px;margin:0 auto}.color-current-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface-2);font-size:11px}.color-current-row>span:first-child{color:var(--muted);font-weight:800}.picker-preview{width:28px;height:28px;border-radius:7px;border:1px solid var(--border);box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}.color-current-row strong{margin-left:auto;font-family:ui-monospace,monospace;font-size:12px}.rgb-slider-row{margin-top:8px;padding:7px 9px;border:1px solid var(--border);border-radius:9px;background:var(--surface-2)}.rgb-slider-row label{display:flex;justify-content:space-between;font-size:10px;font-weight:800;color:var(--muted);margin-bottom:4px}.rgb-slider-row label b{color:var(--text)}.rgb-slider-row input[type=range]{width:100%;height:18px;margin:0}.hex-row{display:flex;align-items:center;gap:7px;margin-top:9px}.hex-row label{font-size:10px;font-weight:900;color:var(--muted)}.hex-row input{flex:1;min-width:0;height:34px;border:1px solid var(--border);border-radius:8px;background:var(--surface-2);color:var(--text);padding:0 9px;font:800 13px ui-monospace,monospace;text-transform:uppercase}.hex-row input.invalid{border-color:#ef4444;box-shadow:0 0 0 1px #ef4444}.hsl-readout{display:flex;justify-content:space-between;align-items:center;margin-top:7px;padding:5px 8px;color:var(--muted);font-size:9px;font-weight:800}.hsl-readout strong{color:var(--text);font-family:ui-monospace,monospace}.color-modal .color-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:8px}.color-modal .sheet{padding-bottom:14px}
 .hud-image-action.primary{background:transparent!important;border-color:var(--border)!important}
+/* Keep the markup controls area a consistent height so tool changes do not move the canvas. */
+.controls{height:160px;min-height:160px;max-height:160px;flex:0 0 160px;overflow-x:hidden;overflow-y:auto;box-sizing:border-box}
+@media(min-width:800px){.controls{height:180px;min-height:180px;max-height:180px;flex-basis:180px}}
 </style>
